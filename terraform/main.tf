@@ -3,6 +3,10 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.0"
+    }
   }
   required_version = ">= 0.12"
 }
@@ -428,4 +432,8 @@ resource "aws_codebuild_project" "udacity" {
   tags = {
     Name = "terraform-ecr-demo"
   }
+}
+
+resource "aws_codebuild_webhook" "udacity" {
+  project_name = aws_codebuild_project.udacity.name
 }
