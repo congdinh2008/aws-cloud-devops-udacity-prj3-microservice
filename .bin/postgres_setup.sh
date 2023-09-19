@@ -4,4 +4,4 @@
 helm repo add $1 https://charts.bitnami.com/bitnami &&\
 
 # Install PostgreSQL
-helm install --set primary.persistence.enabled=false postgres $1/postgresql
+helm install --set primary.persistence.enabled=false $2 $1/postgresql
