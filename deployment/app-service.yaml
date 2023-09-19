@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: backend-coworking
+  name: backend-coworking
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 5153
+      targetPort: 5153
+  selector:
+    service: backend-coworking
