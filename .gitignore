@@ -8,3 +8,4 @@ terraform/solution.plan
 terraform/main.tf
 terraform/terraform.tfvars
 terraform/variables.tf
+terraform/terraform.tfstate.backup
