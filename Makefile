@@ -19,6 +19,5 @@ expose:
 terraform_destroy:
 	sh ./.bin/terraform_destroy.sh
 
-# start: aws_configure terraform eks_config postgres_install seed_data eks_deploy expose
-start: expose
+start: aws_configure terraform eks_config postgres_install seed_data eks_deploy expose
 delete: terraform_destroy
