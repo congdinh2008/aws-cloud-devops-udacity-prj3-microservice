@@ -86,6 +86,35 @@ You can use the following command to do:
 make start
 ```
 
+### CloudWatch Metrics in EKS
+
+Kubernetes clusters created with EKS are set up to integrate with CloudWatch Container Insights by default.
+
+This captures common sets of metrics such as CPU, memory, disk usage, and network traffic details. Additional data such as container diagnostic data is also captured.
+
+Configuring CloudWatch Insights
+CloudWatch insights are easy to configure on your cluster.
+
+1. Node Role Policy
+   Your policy for your EKS node role should include CloudWatchAgentServerPolicy for the agent to properly forward metrics.
+
+2. Install CloudWatch Agent
+   In the following command, replace `<YOUR_CLUSTER_NAME_HERE>` on line 1 with the name of your EKS cluster and replace `<YOUR_AWS_REGION_HERE>` on line 2 with your AWS region. Then, run the command on an environment that has kubectl configured.
+
+   ```
+   ClusterName=<YOUR_CLUSTER_NAME_HERE>
+   RegionName=<YOUR_AWS_REGION_HERE>
+   FluentBitHttpPort='2020'
+   FluentBitReadFromHead='Off'
+   [[ ${FluentBitReadFromHead} = 'On' ]] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
+   [[ -z ${FluentBitHttpPort} ]] && FluentBitHttpServer='Off' || FluentBitHttpServer='On'
+   curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluent-bit-quickstart.yaml | sed 's/{{cluster_name}}/'${ClusterName}'/;s/{{region_name}}/'${RegionName}'/;s/{{http_server_toggle}}/"'${FluentBitHttpServer}'"/;s/{{http_server_port}}/"'${FluentBitHttpPort}'"/;s/{{read_from_head}}/"'${FluentBitReadFromHead}'"/;s/{{read_from_tail}}/"'${FluentBitReadFromTail}'"/' | kubectl apply -f -
+   ```
+
+This will install CloudWatch insights into the namespace amazon-cloudwatch on your cluster.
+
+After this is configured, you can navigate to CloudWatch in the AWS console to access CloudWatch Insights.
+
 ### Get Web API URL
 
 1. Get load balancer external ip
@@ -106,9 +135,10 @@ make start
 
 2. CloudWatch
 
-<img src="./screenshots/CloudWatch_logs.png">
+<img src="./screenshots_feedback/CloudWatch_log_container_insights_application.png">
+<img src="./screenshots_feedback/CloudWatch_log_container_insights_application_log_stream.png">
 
-3. Kubectl logs pod
+1. Kubectl logs pod
 
 <img src="./screenshots/EKS_logs_pods_request_result_with_data.png">
 
