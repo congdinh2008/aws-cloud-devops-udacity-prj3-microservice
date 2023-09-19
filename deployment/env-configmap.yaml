@@ -5,5 +5,5 @@ metadata:
 data:
   DB_USERNAME: "postgres"
   DB_NAME: "postgres"
-  DB_HOST: "postgres-postgresql"
+  DB_HOST: "udacity-postgresql"
   DB_PORT: "5432"
