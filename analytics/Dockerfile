@@ -5,7 +5,7 @@ FROM python:3.11.5-bookworm
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY ./analytics /app
+COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt

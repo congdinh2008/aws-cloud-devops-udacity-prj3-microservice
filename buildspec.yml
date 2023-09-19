@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    IMAGE_REPO_NAME: udacity-kubernetes-cluster-demo/server
+    IMAGE_REPO_NAME: udacity-prj3-ecr
     IMAGE_TAG: v1
 phases:
   pre_build:
